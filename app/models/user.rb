@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :posts
+  
   def self.from_omniauth(auth)
   	return nil unless auth.info["email"].end_with?("@synerzip.com")
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|

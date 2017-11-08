@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Price</th>
+      <th>Price</th>
+      <th>Contact number</th>
+      <th>Published</th>
+      <th>Published date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.description %></td>
+        <td><%= post.address %></td>
+        <td><%= post.price %></td>
+        <td><%= post.price %></td>
+        <td><%= post.contact_number %></td>
+        <td><%= post.published %></td>
+        <td><%= post.published_date %></td>
+        <td><%= link_to 'Show', post %></td>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_category_post_path(@category) %>
