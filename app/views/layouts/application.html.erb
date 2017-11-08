@@ -1,26 +1,81 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>CompanyPortal</title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<html lang="en">
+	<head>
+	  <title>Company Portal</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <%= csrf_meta_tags %>
+	  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	</head>
+ <body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>                        
+	      </button>
+	      <a class="navbar-brand" href="#">Logo</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><%= link_to "Home", categories_path %></li>
+	        <li><a href="#">My Posts</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+		      <% if current_user %>
+			      <li>
+		          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+			      </li>
+			    <% else %>
+			      <li>
+		          <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+			      </li>
+		      <% end %>
+	      </ul>
+	      <form class="navbar-form navbar-right" role="search">
+	        <div class="form-group input-group">
+	          <input type="text" class="form-control" placeholder="Search..">
+	          <span class="input-group-btn">
+	            <button class="btn btn-default" type="button">
+	              <span class="glyphicon glyphicon-search"></span>
+	            </button>
+	          </span>        
+	        </div>
+	      </form>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	<div class="container main-container">
+	  <div>
+	    <div class="flash-error"><%= flash[:error] %></div><br/>
+	      <% if current_user %>
+	        Signed in as <strong><%= current_user.name %></strong>!
+	      <% else %>
+	        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+	      <% end %>
+	  </div>
+	  <div>
+	    <%= yield %>
+	  </div>
+	</div>  
 
-  <body>
-    <div>
-    <div style='color: red'><%= flash[:error] %></div><br/>
-      <% if current_user %>
-        Signed in as <strong><%= current_user.name %></strong>!
-        <%#= link_to "Posts", posts_path %>
-        <%= link_to "Categories", categories_path %>
-        <%= link_to "Sign out", signout_path, id: "sign_out" %>
-      <% else %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
-      <% end %>
-    </div>
-    <div>
-    <%= yield %>
-    </div>
-  </body>
+	<footer class="container-fluid text-center">
+	    <div class="wpb_text_column wpb_content_element ">
+	    <div class="wpb_wrapper">
+	      <p>© 2017 Synerzip, Inc. All Rights Reserved | <a href="http://www.synerzip.com/privacy-policy/">Privacy Policy</a> | <a href="http://www.synerzip.com/disclaimer/">Disclaimer</a></p>
+	    </div>
+	  </div>
+	</footer>
+
+ </body>
 </html>
+

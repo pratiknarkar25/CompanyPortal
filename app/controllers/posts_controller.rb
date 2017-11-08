@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# This class provides the CRUD for posts
 class PostsController < ApplicationController
   before_action :require_authentication
   before_action :set_category
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: %i[show edit update destroy]
 
   # GET /posts
   # GET /posts.json
@@ -11,8 +14,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   # GET /posts/1.json
-  def show
-  end
+  def show; end
 
   # GET /posts/new
   def new
@@ -20,18 +22,21 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /posts
   # POST /posts.json
+  # rubocop:disable MethodLength
   def create
-    binding.pry
     @post = Post.new(post_params)
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html do
+          redirect_to @post,
+                      notice: 'Post was successfully created.'
+        end
+
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -45,7 +50,10 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html do
+          redirect_to @post,
+                      notice: 'Post was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -59,24 +67,30 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html do
+        redirect_to posts_url,
+                    notice: 'Post was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    def set_category
-      @category = Category.find params[:category_id]
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:title, :description, :address, :price, :price, 
-        :contact_number, :published, :published_date, :category_id)
-    end
+  def set_category
+    @category = Category.find params[:category_id]
+  end
+
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
+  def post_params
+    params.require(:post).permit(:title, :description, :address, :price,
+                                 :price, :contact_number, :published,
+                                 :published_date, :category_id)
+  end
 end

@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+.container {
+	min-height: calc(100vh - 112px);
+}
+
+.flash-error{
+	color: 'red';
+}
+
+.main-container {
+	margin-top: 52px;
+}
