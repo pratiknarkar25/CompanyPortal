@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This class adds authorization for posts
 class PostPolicy
   attr_reader :user, :post
 
@@ -7,11 +10,10 @@ class PostPolicy
   end
 
   def edit?
-    binding.pry
-    current_user.email == "pratik.narkar@synerzip.com"
+    current_user.id == @post.user_id || current_user.role == 'admin'
   end
 
   def update?
-    user.admin? or not post.published?
+    edit?
   end
 end
