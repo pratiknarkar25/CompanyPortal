@@ -1,27 +1,23 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @post.title %>
+  <strong><%= @post.title %></strong>
+</p>
+
+<p>
+  <i><%= @post.address %></i>
 </p>
 
 <p>
   <strong>Description:</strong>
+</p>
+
+<p>
   <%= @post.description %>
 </p>
 
 <p>
-  <strong>Address:</strong>
-  <%= @post.address %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @post.price %>
-</p>
-
-<p>
-  <strong>Price:</strong>
+  <strong><%= price_text(@category) %>:</strong>
   <%= @post.price %>
 </p>
 
@@ -30,15 +26,8 @@
   <%= @post.contact_number %>
 </p>
 
-<p>
-  <strong>Published:</strong>
-  <%= @post.published %>
-</p>
-
-<p>
-  <strong>Published date:</strong>
-  <%= @post.published_date %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<%= link_to 'Edit', edit_category_post_path(@category, @post) if policy(@post).edit? %>
+<%= link_to 'Back', category_posts_path(@category) %>
+<hr/>
+<%= render 'comments/form' %>
+<%= render 'comments/comments' %>

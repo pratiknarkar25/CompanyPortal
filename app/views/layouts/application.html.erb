@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	  <title>Company Portal</title>
-	  <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	  <%= csrf_meta_tags %>
-	  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-	  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-	</head>
- <body>
+<head>
+  <title>Company Portal</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
@@ -25,8 +25,8 @@
 	    <div class="collapse navbar-collapse" id="myNavbar">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><%= link_to "Home", categories_path %></li>
-	        <li><a href="#">My Posts</a></li>
-	      </ul>
+	        <li><%= link_to "My Posts", my_posts_path %></li>
+	      </ul>	
 	      <ul class="nav navbar-nav navbar-right">
 		      <% if current_user %>
 			      <li>
@@ -57,25 +57,24 @@
 	<div class="container main-container">
 	  <div>
 	    <div class="flash-error"><%= flash[:error] %></div><br/>
-	      <% if current_user %>
-	        Signed in as <strong><%= current_user.name %></strong>!
-	      <% else %>
-	        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
-	      <% end %>
+      <% if current_user %>
+        Welcome <strong><%= current_user.email %></strong>!
+      <% else %>
+        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+      <% end %>
 	  </div>
 	  <div>
 	    <%= yield %>
 	  </div>
-	</div>  
+	</div>
 
 	<footer class="container-fluid text-center">
-	    <div class="wpb_text_column wpb_content_element ">
-	    <div class="wpb_wrapper">
-	      <p>© 2017 Synerzip, Inc. All Rights Reserved | <a href="http://www.synerzip.com/privacy-policy/">Privacy Policy</a> | <a href="http://www.synerzip.com/disclaimer/">Disclaimer</a></p>
+    <div class="wpb_text_column wpb_content_element ">
+      <div class="wpb_wrapper">
+	      © 2017 Synerzip, Inc. All Rights Reserved | <a href="http://www.synerzip.com/privacy-policy/">Privacy Policy</a> | <a href="http://www.synerzip.com/disclaimer/">Disclaimer</a>
 	    </div>
 	  </div>
 	</footer>
 
- </body>
+</body>
 </html>
-

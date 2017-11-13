@@ -1,4 +1,4 @@
-<%= form_with(model: post,  url: category_posts_path(@category), local: true) do |form| %>
+<%= form_with(model: [@category, @post], local: true) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -40,12 +40,6 @@
     <%= form.label :published %>
     <%= form.check_box :published, id: :post_published %>
   </div>
-
-<!--   <div class="field">
-    <%= form.label :published_date %>
-    <%= form.datetime_select :published_date, id: :post_published_date %>
-  </div>
- -->
 
   <div class="actions">
     <%= form.submit %>

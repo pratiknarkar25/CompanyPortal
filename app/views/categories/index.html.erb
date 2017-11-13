@@ -16,9 +16,8 @@
       <tr>
         <td><%= link_to "#{category.name}", category_posts_path(category) %></td>
         <td><%= category.description %></td>
-        <td></td>
-        <td><%= link_to 'Edit', edit_category_path(category) if current_user.email == "pratik@gmail.com" %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.email == "pratik@gmail.com" %></td>
+        <td><%= link_to 'Edit', edit_category_path(category) if policy(category).edit? %></td>
+        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } if policy(category).destroy? %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +25,4 @@
 
 <br>
 
-<%= link_to 'New Category', new_category_path if current_user.email == "pratik@gmail.com" %>
+<%= link_to 'New Category', new_category_path if policy(Category).create? %>

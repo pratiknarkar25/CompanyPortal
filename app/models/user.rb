@@ -3,6 +3,7 @@
 # User here is an employee of company
 class User < ApplicationRecord
   has_many :posts
+  has_many :comments
 
   # rubocop:disable MethodLength
   def self.from_omniauth(auth)
