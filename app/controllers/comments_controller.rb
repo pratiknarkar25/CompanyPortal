@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @comment = @commentable.comments.new
+    @comment = @commentable.comments.new(parent_id: params[:parent_id])
+    render partial: 'form'
   end
 
   def create
@@ -19,11 +20,24 @@ class CommentsController < ApplicationController
     redirect_to [@category, @commentable]
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    authorize @comment, :destroy?
+    @comment.destroy
+    respond_to do |format|
+      format.html do
+        redirect_to category_post_path(@category, @commentable),
+                    notice: 'Comment deleted successfully'
+      end
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_id,
-                                    :commentable_type)
+                                    :commentable_type, :parent_id)
   end
 
   def set_category
