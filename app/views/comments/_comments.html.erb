@@ -1,17 +1,2 @@
 <h3>Comments</h3><hr/>
-
-<div id='comments'>
-	<% @comments.each do |comment| %>
-		<div class='comment'>
-			<strong><%= comment.user.name %></strong> | 
-			<%= comment.created_at.strftime("%d %b %Y %H:%M:%S ") %><br/><br/>
-			<%= comment.content %><br/><br/>
-			<%= link_to 'Reply' %>
-			<% if policy(comment).destroy? %>
-				| <%= link_to 'Destroy', category_post_comment_path(@category, @post, comment), 
-				confirm: 'Are you sure?', method: :delete %>
-			<% end %>
-			<hr/>
-		</div>
-	<% end %>
-</div>
+<%= nested_messages @comments.arrange(:order => :created_at) %>

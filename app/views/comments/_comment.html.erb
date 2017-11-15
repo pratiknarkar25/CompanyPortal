@@ -1,0 +1,12 @@
+<div class='comment'>
+  <strong><%= message.user.name %></strong> | 
+	<%= message.created_at.strftime("%d %b %Y %H:%M:%S ") %><br/><br/>
+	<%= message.content %><br/><br/>
+	<%= link_to 'Reply', new_category_post_comment_path(@category, @commentable,
+	parent_id: message) %>
+	<% if policy(message).destroy? %>
+	        | <%= link_to 'Destroy', category_post_comment_path(@category, @post, message), 
+	        confirm: 'Are you sure?', method: :delete %>
+<% end %>
+<hr/>
+</div>
