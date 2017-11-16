@@ -9,7 +9,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = @category.posts
+    @posts = @category.posts.order(created_at: :desc)
+                      .page(params[:page]).per(Post::PER_PAGE)
   end
 
   # GET /posts/1
@@ -17,6 +18,7 @@ class PostsController < ApplicationController
   def show
     @commentable = @post
     @comments = @commentable.comments.order(created_at: :desc)
+                            .page(params[:page]).per(Post::PER_PAGE)
     @comment = Comment.new
   end
 
@@ -82,7 +84,8 @@ class PostsController < ApplicationController
   end
 
   def my_posts
-    @posts = current_user.posts
+    @posts = current_user.posts.order(created_at: :desc)
+                         .page(params[:page]).per(Post::PER_PAGE)
     render :index
   end
 

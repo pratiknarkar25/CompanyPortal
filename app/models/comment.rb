@@ -6,4 +6,6 @@ class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
   validates :content, presence: true
   belongs_to :user
+
+  PER_PAGE = 30
 end

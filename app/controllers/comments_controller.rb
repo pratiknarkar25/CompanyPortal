@@ -6,10 +6,12 @@ class CommentsController < ApplicationController
 
   def index
     @comments = @commentable.comments.order('created_at desc')
+                            .page(params[:page]).per(Comment::PER_PAGE)
   end
 
   def new
-    @comment = @commentable.comments.new(parent_id: params[:parent_id])
+    @comment = @commentable.comments.order('created_at desc')
+                           .new(parent_id: params[:parent_id])
     respond_to do |format|
       format.html { render partial: 'form' }
       format.js
