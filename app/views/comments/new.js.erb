@@ -1,0 +1,2 @@
+var reply_id = '#reply_link_' + <%= @comment.parent_id.to_s %>;
+$(reply_id).hide().after('<%= j render("form") %>')

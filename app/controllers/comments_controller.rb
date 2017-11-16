@@ -10,7 +10,10 @@ class CommentsController < ApplicationController
 
   def new
     @comment = @commentable.comments.new(parent_id: params[:parent_id])
-    render partial: 'form'
+    respond_to do |format|
+      format.html { render partial: 'form' }
+      format.js
+    end
   end
 
   def create

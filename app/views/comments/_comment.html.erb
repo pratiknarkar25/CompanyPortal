@@ -1,12 +1,13 @@
 <div class='comment'>
   <strong><%= message.user.name %></strong> | 
-	<%= message.created_at.strftime("%d %b %Y %H:%M:%S ") %><br/><br/>
-	<%= message.content %><br/><br/>
-	<%= link_to 'Reply', new_category_post_comment_path(@category, @commentable,
-	parent_id: message) %>
-	<% if policy(message).destroy? %>
-	        | <%= link_to 'Destroy', category_post_comment_path(@category, @post, message), 
-	        confirm: 'Are you sure?', method: :delete %>
-<% end %>
-<hr/>
+  <%= message.created_at.strftime("%d %b %Y %H:%M:%S ") %>
+  <% if policy(message).destroy? %>
+    | <%= link_to 'Destroy', category_post_comment_path(@category, @post, message), 
+        method: :delete, remote: true, data: { confirm: "Are you sure?"} %>
+	<% end %><br/><br/>
+  <%= message.content %><br/><br/>
+  <%= link_to 'Reply', new_category_post_comment_path(@category, @commentable,
+    parent_id: message), id: "reply_link_#{message.id}", remote: true %>
+  <div id="reply_text_box_#{message.id}"></div>
+  <hr/>
 </div>

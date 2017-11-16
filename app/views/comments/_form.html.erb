@@ -1,10 +1,4 @@
-<% if @comment.parent %>
-	Reply to : <%= @comment.parent.content %><br><br>
-<% else %>
-	Add Comment: 
-<% end %>
-
-<%= form_for [@category, @commentable, @comment] do |f| %>
+<%= form_for [@category, @commentable, @comment], remote: true do |f| %>
 	<% if @comment.errors.any? %>
 		<div class='error_messages'>
 			<h2>Please correct the following errors.</h2>
@@ -17,9 +11,9 @@
 	<% end %>
 	<%= f.hidden_field :parent_id %>
 	<div class='field'>
-		<%= f.text_area :content, rows: 8 %>
+		<%= content_field(f) %>
 	</div>
 	<div class='actions'>
-		<%= f.submit "Add Comment" %>
+		<%= f.submit submit_text, class: "btn btn-default" %>
 	</div>
 <% end %>

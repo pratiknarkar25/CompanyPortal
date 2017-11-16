@@ -10,4 +10,16 @@ module CommentsHelper
                     class: 'nested_messages')
     end.join.html_safe
   end
+
+  def submit_text
+    @comment.parent.present? ? 'Reply' : 'Add Comment'
+  end
+
+  def content_field(f)
+    if @comment.parent.present?
+      f.text_field :content, class: 'form-control'
+    else
+      f.text_area :content, rows: 8, class: 'form-control'
+    end
+  end
 end
