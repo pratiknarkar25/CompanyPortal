@@ -3,7 +3,7 @@
 prefix = 'Here you can add a post to '
 suffix = ' by adding all the details in the description'
 Category.first_or_create([
-                           { name: 'Flat for rent', description: prefix +
+                           { name: 'Flats for rent', description: prefix +
                             'rent out a flat' + suffix },
                            { name: 'Vacancy for room mate',
                              description: prefix +
