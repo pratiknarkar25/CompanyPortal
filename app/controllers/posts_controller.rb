@@ -3,7 +3,7 @@
 # This class provides the CRUD for posts
 class PostsController < ApplicationController
   before_action :require_authentication, except: %i[index show]
-  before_action :set_category, except: :my_posts
+  before_action :set_category, except: %i[my_posts search]
   before_action :set_post, only: %i[show edit update destroy]
 
   # GET /posts
@@ -85,6 +85,15 @@ class PostsController < ApplicationController
   def my_posts
     @posts = current_user.posts.order(created_at: :desc)
                          .page(params[:page]).per(Post::PER_PAGE)
+    render :index
+  end
+
+  def search
+    search_keyword = params[:search_keyword]
+    @posts = Post.where('title like :q or description like :q',
+                        q: "%#{search_keyword}%")
+    @posts = @posts.order(created_at: :desc).page(params[:page])
+                   .per(Post::PER_PAGE)
     render :index
   end
 

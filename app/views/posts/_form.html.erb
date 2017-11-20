@@ -1,47 +1,41 @@
-<%= form_with(model: [@category, @post], local: true) do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+  <%= form_with(model: [@category, @post], local: true) do |form| %>
+    <% if post.errors.any? %>
+      <div id="error_explanation">
+        <h3><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h3>
+        <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="form-group col-md-8">
+        <%= form.label :title %>
+        <%= form.text_field :title, id: :post_title, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-8">
+        <%= form.label :description %>
+        <%= form.text_area :description, id: :post_description, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-8">
+      <%= form.label :address %>
+      <%= form.text_field :address, id: :post_address, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-8">
+      <%= form.label "Price (Rs)" %>
+      <%= form.text_field :price, id: :post_price, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-8">
+      <%= form.label :contact_number %>
+      <%= form.text_field :contact_number, id: :post_contact_number, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-md-8">
+      <%= form.submit "Submit", class: "btn btn-default" %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title, id: :post_title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, id: :post_description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address, id: :post_address %>
-  </div>
-
-  <div class="field">
-    <%= form.label "Price (Rs)" %>
-    <%= form.text_field :price, id: :post_price %>
-  </div>
-
-  <div class="field">
-    <%= form.label :contact_number %>
-    <%= form.text_field :contact_number, id: :post_contact_number %>
-  </div>
-
-  <div class="field">
-    <%= form.label :published %>
-    <%= form.check_box :published, id: :post_published %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
