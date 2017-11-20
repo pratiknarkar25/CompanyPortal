@@ -10,7 +10,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user.id == @post.user_id || @user.role == 'admin'
+    @user&.id == @post.user_id || @user&.role == 'admin'
   end
 
   def update?

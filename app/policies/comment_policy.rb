@@ -10,7 +10,7 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user.id == @comment.user_id || @user.role == 'admin'
+    @user&.id == @comment.user_id || @user&.role == 'admin'
   end
 
   def update?

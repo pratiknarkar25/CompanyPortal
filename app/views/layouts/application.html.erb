@@ -22,22 +22,29 @@
 	      </button>
 	      <a class="navbar-brand" href="#">Logo</a>
 	    </div>
+
 	    <div class="collapse navbar-collapse" id="myNavbar">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><%= link_to "Home", categories_path %></li>
-	        <li><%= link_to "My Posts", my_posts_path %></li>
+	        <li><%= link_to "Home", categories_path %></li>
 	      </ul>	
-	      <ul class="nav navbar-nav navbar-right">
-		      <% if current_user %>
+
+	      <% if current_user %>
+		      <ul class="nav navbar-nav">
+		        <li><%= link_to "My Posts", my_posts_path %></li>
+		      </ul>	
+		      <ul class="nav navbar-nav navbar-right">
 			      <li>
 		          <%= link_to "Sign out", signout_path, id: "sign_out" %>
 			      </li>
-			    <% else %>
+		      </ul>
+		    <% else %>
+		      <ul class="nav navbar-nav navbar-right">
 			      <li>
 		          <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
 			      </li>
-		      <% end %>
-	      </ul>
+		      </ul>
+	      <% end %>
+
 	      <form class="navbar-form navbar-right" role="search">
 	        <div class="form-group input-group">
 	          <input type="text" class="form-control" placeholder="Search..">
@@ -49,19 +56,24 @@
 	        </div>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+ 					<% if current_user %>
+		        <li>
+			        <a href="#"><span class="glyphicon glyphicon-user"></span> 
+									Welcome <strong><%= current_user.name %></strong>
+			        </a>
+		        </li>
+					<% end %>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
 	<div class="container main-container">
 	  <div>
-	    <div class="flash-error"><%= flash[:error] %></div><br/>
-      <% if current_user %>
-        Welcome <strong><%= current_user.email %></strong>!
-      <% else %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
-      <% end %>
+			<% if notice %> 
+				<p class="alert alert-success">
+					<%= notice %>
+				</p>
+			<% end %>
 	  </div>
 	  <div>
 	    <%= yield %>

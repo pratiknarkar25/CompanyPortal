@@ -10,7 +10,7 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def new?
-    @user.role == 'admin'
+    @user&.role == 'admin'
   end
 
   def show?

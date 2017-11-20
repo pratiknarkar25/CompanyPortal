@@ -17,10 +17,14 @@
         <p>Monthly Rent: <%= post.price %></p>
         <p>Contact Number: <%= post.contact_number %></p>
         <p>Email: <%= post.user.email %></p>
-        <p><%= link_to 'Edit', edit_category_post_path(post.category, post) if policy(post).edit? %> | 
-        <%= link_to 'Destroy', category_post_path(post.category, post), 
-        method: :delete, data: { confirm: 'Are you sure?' } if policy(post).destroy? %>
-        </p>
+
+        <% if policy(post).edit? %>
+          <p>
+          <%= link_to 'Edit', edit_category_post_path(post.category, post) %> | 
+          <%= link_to 'Destroy', category_post_path(post.category, post), 
+          method: :delete, data: { confirm: 'Are you sure?' } %>
+          </p>
+        <% end %>
       </div>
     <% end %>
     <%= paginate @posts %>
