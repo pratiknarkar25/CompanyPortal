@@ -2,7 +2,7 @@
 
 # This class provides the CRUD for posts
 class PostsController < ApplicationController
-  before_action :require_authentication
+  before_action :require_authentication, except: %i[index show]
   before_action :set_category, except: :my_posts
   before_action :set_post, only: %i[show edit update destroy]
 
@@ -18,7 +18,6 @@ class PostsController < ApplicationController
   def show
     @commentable = @post
     @comments = @commentable.comments.order(created_at: :desc)
-                            .page(params[:page]).per(Post::PER_PAGE)
     @comment = Comment.new
   end
 

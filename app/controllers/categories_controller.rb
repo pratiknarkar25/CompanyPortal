@@ -2,7 +2,7 @@
 
 # This controller provides CRUD for category
 class CategoriesController < ApplicationController
-  before_action :require_authentication
+  before_action :require_authentication, except: %i[index show]
   before_action :set_category, only: %i[show edit update destroy]
 
   # GET /categories
