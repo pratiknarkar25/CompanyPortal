@@ -4,7 +4,7 @@
 module PostsHelper
   def price_text(category)
     case category.name
-    when 'Flat for rent', 'Vacancy for room mate'
+    when 'Flats for rent', 'Vacancy for room mate'
       return 'Monthly Rent (Rs)'
     when 'Sell a car', 'Sell a bike'
       return 'Total Price (Rs)'

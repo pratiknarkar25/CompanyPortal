@@ -1,31 +1,35 @@
-<p>
-  <strong><%= @post.title %></strong>
-</p>
+<div class="jumbotron">
+	<p>
+	  <strong><%= @post.title %></strong>
+	</p>
+	<p>
+	  <i><%= @post.address %></i>
+	</p>
 
-<p>
-  <i><%= @post.address %></i>
-</p>
+	<p>
+	  <strong>Description:</strong>
+	</p>
+	<p>
+	  <%= @post.description %>
+	</p>
 
-<p>
-  <strong>Description:</strong>
-</p>
+	<p>
+	  <strong><%= price_text(@category) %>:</strong>
+	  <%= @post.price %>
+	</p>
 
-<p>
-  <%= @post.description %>
-</p>
+	<p>
+	  <strong>Contact number:</strong>
+	  <%= @post.contact_number %>
+	</p>
 
-<p>
-  <strong><%= price_text(@category) %>:</strong>
-  <%= @post.price %>
-</p>
+  <p> 
+	  <strong>Email:</strong>
+	  <%= @post.user.email %>  	
+  </p>
+	<%= link_to 'Edit', edit_category_post_path(@category, @post) if policy(@post).edit? %> | 
+	<%= link_to 'Back', category_posts_path(@category) %>
+</div>
 
-<p>
-  <strong>Contact number:</strong>
-  <%= @post.contact_number %>
-</p>
-
-<%= link_to 'Edit', edit_category_post_path(@category, @post) if policy(@post).edit? %>
-<%= link_to 'Back', category_posts_path(@category) %>
-<hr/>
 <%= render 'comments/form' %>
 <%= render 'comments/comments' %>

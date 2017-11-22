@@ -30,12 +30,16 @@ footer {
 
 .main-container {
 	margin-top: 52px;
+	padding-top: 10px;
 }
 
 .nested_messages {
   padding-left: 10px;
 }
 
+.btn .btn-default{
+	margin-top: 10px;
+}
 .pagination a, .pagination span.current, .pagination span.gap {
 	float: left;
 	padding: 0 14px;
