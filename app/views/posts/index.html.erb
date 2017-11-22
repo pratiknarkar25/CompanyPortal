@@ -1,21 +1,19 @@
 <div class="container">
-<% if @category %>
-  <%= link_to 'New Post', new_category_post_path(@category) %>
-<% else %>
-  <%= link_to 'Select Category', categories_path %>
-<% end %>
+  <div class="btn btn-default">
+  <% if @category %>
+    <%= link_to 'New Post', new_category_post_path(@category) %>
+  <% else %>
+    <%= link_to 'Select Category', categories_path %>
+  <% end %>
+  </div>
 
-<h1><%= @category.name if @category %></h1>
+  <h1><%= @category.name if @category %></h1>
   <div class="list-group">
     <% @posts.each do |post| %>
       <div class="list-group-item">     
         <h2><%= link_to "#{post.title}", category_post_path(post.category, post) %></h2>
-        <p><%= post.description %></p>
         <p><%= post.address %></p>
-        <p>Monthly Rent: <%= post.price %></p>
-        <p>Contact Number: <%= post.contact_number %></p>
-        <p>Email: <%= post.user.email %></p>
-
+        <p><%= price_text(post.category) %>: <%= post.price %></p>
         <% if policy(post).edit? %>
           <p>
           <%= link_to 'Edit', edit_category_post_path(post.category, post) %> | 
@@ -27,7 +25,4 @@
     <% end %>
     <%= paginate @posts %>
   </div>
-
-
-
- </div>
+</div>

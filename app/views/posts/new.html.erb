@@ -1,3 +1,5 @@
 <h1>Form: <%= @category.name %></h1>
 <%= render 'form', post: @post %>
-<%= link_to 'Back', category_posts_path(@category) %>
+<div class="form-group col-md-8">
+  <%= link_to 'Back', :back %>
+</div>

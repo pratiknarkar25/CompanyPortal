@@ -2,7 +2,7 @@
 
 # This class provides the CRUD for posts
 class PostsController < ApplicationController
-  before_action :require_authentication, except: %i[index show]
+  before_action :require_authentication, except: %i[index show search]
   before_action :set_category, except: %i[my_posts search]
   before_action :set_post, only: %i[show edit update destroy]
 
