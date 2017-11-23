@@ -15,6 +15,9 @@ Category.first_or_create([
                             'sell a bike' + suffix }
                          ])
 
-user = User.find_by(email: 'pratik.narkar@synerzip.com')
-user.role = 'admin'
-Rails.logger.info "User with email id #{user.email} is admin now" if user.save
+# Uncomment & runn this once user with email
+# pratik.narkar@synerzip.com is created
+
+# user = User.find_by(email: 'pratik.narkar@synerzip.com')
+# user.role = 'admin'
+# Rails.logger.info "User with email id #{user.email} is admin now" if user.save
