@@ -1,16 +1,28 @@
 <div class="container">
-<%= link_to 'New Category', new_category_path if policy(Category).create? %>
-
-<% @categories.each do |category| %>
-  <div class="list-group">
-    <p>
-	    <h2><%= link_to "#{category.name}", category_posts_path(category) %></h2>
-	    <% if policy(category).edit? %>	
-		    <%= link_to 'Edit', edit_category_path(category) %> | 
-		    <%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %> 
-	    <% end %>
-    </p>
-    <p><%= category.description %></p><hr/>
-  </div>
-<% end %><br>
+	<p>
+		<%= link_to 'New Category', new_category_path,
+			class: "btn btn-default" if policy(Category).create? %>
+	</p>		
+	<% @categories.each do |category| %>
+			<div class="panel panel-success">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">
+			      <%= link_to "#{category.name}", category_posts_path(category) %>
+				    <% if policy(category).edit? %>	
+					    <%= link_to edit_category_path(category) do %>
+						    <i class='lyphicon glyphicon-edit' data-toggle='tooltip' 
+						    data-placement='left' title="Edit"></i>
+							<% end %>
+					    <%= link_to category, method: :delete, data: { confirm: 'Are you sure?' } do %>
+						    <i class='glyphicon glyphicon-remove'  data-toggle='tooltip' 
+						    data-placement='left' title='Delete'></i>
+							<% end %>
+				    <% end %>
+			    </h3>
+			  </div>
+			  <div class="panel-body">
+			    <%= category.description.html_safe %>
+			  </div>
+			</div>
+	<% end %>
 </div>
