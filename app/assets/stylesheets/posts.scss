@@ -5,3 +5,9 @@
 #mceu_15, #mceu_30 {
   display: none;
 }
+
+@media (max-width: 767px) {
+  .jumbotron p {
+	  font-size: 14px;
+  }
+}

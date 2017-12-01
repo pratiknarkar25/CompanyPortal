@@ -1,8 +1,11 @@
 <div class="container">
-	<p>
-		<%= link_to 'New Category', new_category_path,
-			class: "btn btn-default" if policy(Category).create? %>
-	</p>		
+	<% if policy(Category).create? %>
+	  <p class='bottom-margin'>
+	    <%= link_to 'New Category', new_category_path,
+		  class: "btn btn-default" %>
+	  </p>
+	<% end %>
+
 	<% @categories.each do |category| %>
 			<div class="panel panel-success">
 			  <div class="panel-heading">

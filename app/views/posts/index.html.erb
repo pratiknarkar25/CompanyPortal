@@ -5,22 +5,30 @@
     <%= link_to 'Select Category', categories_path, class: 'btn btn-default' %>
   <% end %>
 
-  <h1><%= @category.name if @category %></h1>
-  <div class="list-group">
-    <% @posts.each do |post| %>
-      <div class="list-group-item">     
-        <h2><%= link_to "#{post.title}", category_post_path(post.category, post) %></h2>
+  <h2><%= @category.name if @category %></h2>
+  <% @posts.each do |post| %>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= link_to "#{post.title}", category_post_path(post.category, post) %>
+          <% if policy(post).edit? %>
+            <%= link_to edit_category_post_path(post.category, post) do %>
+              <i class='lyphicon glyphicon-edit' data-toggle='tooltip' 
+              data-placement='left' title="Edit"></i>
+            <% end %>
+            <%= link_to category_post_path(post.category, post), method: :delete, 
+                data: { confirm: 'Are you sure?' } do %>
+              <i class='glyphicon glyphicon-remove'  data-toggle='tooltip' 
+              data-placement='left' title='Delete'></i>
+            <% end %>
+          <% end %>
+        </h3>
+      </div>
+      <div class="panel-body">
         <p><%= post.address %></p>
         <p><%= price_text(post.category) %>: <%= post.price %></p>
-        <% if policy(post).edit? %>
-          <p>
-          <%= link_to 'Edit', edit_category_post_path(post.category, post) %> | 
-          <%= link_to 'Destroy', category_post_path(post.category, post), 
-          method: :delete, data: { confirm: 'Are you sure?' } %>
-          </p>
-        <% end %>
       </div>
-    <% end %>
-    <%= paginate @posts %>
-  </div>
+    </div>     
+  <% end %>
+  <%= paginate @posts %>
 </div>
