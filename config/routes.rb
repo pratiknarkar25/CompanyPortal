@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :categories do
     resources :posts do
       resources :comments
+      match 'photos/:id', to: 'posts#delete_photo', via: :delete,
+                          as: 'delete_photo'
     end
   end
   get 'my_posts', to: 'posts#my_posts'
