@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # This class provides the CRUD for posts
+# rubocop:disable ClassLength
 class PostsController < ApplicationController
   before_action :require_authentication, except: %i[index show search]
   before_action :set_category, except: %i[my_posts search]
@@ -19,6 +20,7 @@ class PostsController < ApplicationController
     @commentable = @post
     @comments = @commentable.comments.order(created_at: :desc)
     @comment = Comment.new
+    @pictures = @post.pictures
   end
 
   # GET /posts/new
@@ -29,6 +31,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     authorize @post, :edit?
+    @pictures = @post.pictures
   end
 
   # POST /posts
@@ -38,6 +41,7 @@ class PostsController < ApplicationController
     @post = build_post
     respond_to do |format|
       if @post.save
+        add_images
         format.html do
           redirect_to category_post_path(@category, @post),
                       notice: 'Post was successfully created.'
@@ -52,10 +56,12 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
+  # rubocop:disable Metrics/AbcSize
   def update
     authorize @post, :update?
     respond_to do |format|
       if @post.update(post_params)
+        add_images
         format.html do
           redirect_to category_post_path(@category, @post),
                       notice: 'Post was successfully updated.'
@@ -88,6 +94,13 @@ class PostsController < ApplicationController
     render :index
   end
 
+  def delete_photo
+    photo = Picture.find(params['id'])
+    post = photo.post
+    photo.destroy
+    redirect_to edit_category_post_path(@category, post)
+  end
+
   def search
     search_keyword = params[:search_keyword]
     @posts = Post.where('title like :q or description like :q',
@@ -98,6 +111,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def add_images
+    params[:images]&.each { |image| @post.pictures.create(image: image) }
+  end
 
   def build_post
     post = Post.new(post_params)
