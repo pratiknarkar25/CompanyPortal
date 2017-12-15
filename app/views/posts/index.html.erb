@@ -13,7 +13,7 @@
           <%= link_to "#{post.title}", category_post_path(post.category, post) %>
           <% if policy(post).edit? %>
             <%= link_to edit_category_post_path(post.category, post) do %>
-              <i class='lyphicon glyphicon-edit' data-toggle='tooltip' 
+              <i class='glyphicon glyphicon-edit' data-toggle='tooltip' 
               data-placement='left' title="Edit"></i>
             <% end %>
             <%= link_to category_post_path(post.category, post), method: :delete, 

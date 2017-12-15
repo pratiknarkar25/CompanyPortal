@@ -1,4 +1,5 @@
-<%= form_with(model: [@category, @post], local: true) do |form| %>
+<%= form_with(model: [@category, @post], local: true, :html => {  
+  multipart: true }) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation" class='form-group col-md-8'>
       <h3><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h3>
@@ -33,6 +34,26 @@
   <div class="form-group col-md-8">
     <%= form.label :contact_number %>
     <%= form.text_field :contact_number, id: :post_contact_number, class: 'form-control' %>
+  </div>
+
+  <div class="form-group col-md-8">
+    <%= form.label :pictures %>
+    <div>
+      <%= file_field_tag "images[]", type: :file, multiple: true %>
+    </div>
+  </div>
+
+  <div class="form-group col-md-8">
+    <% @pictures&.each do |photo| %>
+      <span class="wrapper">       
+         <%= link_to category_post_delete_photo_path(post.category, post, photo), method: :delete, 
+                  data: { confirm: 'Are you sure?' }, class: "img-link" do %>
+          <i class='glyphicon glyphicon-remove'  data-toggle='tooltip' 
+              data-placement='left' title='Delete'></i>
+           <%= image_tag photo.image.url, size: '200x150' %>
+          <% end %>
+      </span>
+    <% end %>
   </div>
 
   <div class="form-group col-md-8">

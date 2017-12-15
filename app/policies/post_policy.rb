@@ -24,4 +24,8 @@ class PostPolicy < ApplicationPolicy
   def destroy?
     edit?
   end
+
+  def delete_photo?
+    edit?
+  end
 end
