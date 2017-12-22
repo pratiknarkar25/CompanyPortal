@@ -17,6 +17,10 @@ class PostPolicy < ApplicationPolicy
     edit?
   end
 
+  def new?
+    @user
+  end
+
   def show?
     true
   end
