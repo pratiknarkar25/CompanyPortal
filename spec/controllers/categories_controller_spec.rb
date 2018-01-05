@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable BlockLength
 RSpec.describe CategoriesController, type: :controller do
   describe 'Get index' do
     it 'returns http success' do
@@ -10,7 +11,7 @@ RSpec.describe CategoriesController, type: :controller do
       get 'index'
       response.should be_success
       expect(assigns(:categories)).to eq([flats_for_rent_category,
-        roommate_vacancy_category])
+                                          roommate_vacancy_category])
     end
   end
 
@@ -25,15 +26,21 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'GET new' do
     it 'calls a new category page' do
       get :new
-      expect(response.status).to eq 302	   
+      expect(response.status).to eq 302
     end
   end
 
   describe 'POST create' do
     it 'create a new category' do
       session[:user_id] = FactoryGirl.create(:admin_user).id
-      post :create, params: { category: { name: 'furniture on rent', 
-	      description: 'furniture rent will be minimal' } }
+      post :create, params:
+        {
+          category:
+          {
+            name: 'furniture on rent',
+            description: 'furniture rent will be minimal'
+          }
+        }
       category = assigns(:category)
       expect(category.name).to eq 'furniture on rent'
       response.should redirect_to(category_url(category))
@@ -44,8 +51,8 @@ RSpec.describe CategoriesController, type: :controller do
       post :create, params: { category: { name: '' } }
       category = assigns(:category)
       expect(category).to_not be_valid
-      expect(category.errors[:name].should include("can't be blank"))
-      expect(category.errors[:description].should include("can't be blank"))
+      expect category.errors[:name].should include("can't be blank")
+      expect category.errors[:description].should include("can't be blank")
     end
   end
 
@@ -53,8 +60,15 @@ RSpec.describe CategoriesController, type: :controller do
     it 'update a category' do
       session[:user_id] = FactoryGirl.create(:admin_user).id
       flats_for_rent_category = FactoryGirl.create(:flats_for_rent)
-      put :update, params: { id: flats_for_rent_category, category: { name: 'Renting for new flats', 
-        description: 'This is renting for new flats' } }
+      put :update, params:
+      {
+        id: flats_for_rent_category,
+        category:
+          {
+            name: 'Renting for new flats',
+            description: 'This is renting for new flats'
+          }
+      }
       category = assigns(:category)
       expect(category.name).to eq 'Renting for new flats'
       expect(category.description).to eq 'This is renting for new flats'
@@ -64,11 +78,12 @@ RSpec.describe CategoriesController, type: :controller do
     it 'Should add name & description to update a category' do
       session[:user_id] = FactoryGirl.create(:admin_user).id
       flats_for_rent_category = FactoryGirl.create(:flats_for_rent)
-      put :update, params: { id: flats_for_rent_category, category: { name: '', description: '' } }
+      put :update, params: { id: flats_for_rent_category,
+                             category: { name: '', description: '' } }
       category = assigns(:category)
       expect(category).to_not be_valid
-      expect(category.errors[:name].should include("can't be blank"))
-      expect(category.errors[:description].should include("can't be blank"))
+      expect category.errors[:name].should include("can't be blank")
+      expect category.errors[:description].should include("can't be blank")
     end
   end
 
