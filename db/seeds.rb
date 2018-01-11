@@ -32,7 +32,7 @@ end
 
 # -------------------- Sample Flat Post ------------------------
 sample_flat_post = Post.find_or_create_by(
-  title: '2 BHK In Baner For Rent',
+  title: '3 BHK In Baner For Rent',
   description: '<p> The house is unfurnished. It has easy access to market,
   schools, hospitals, banks and ATMs as well. *Preferred for family or
   working bachelors. *Double car parking. *it has sitting place also 9*11
@@ -150,5 +150,12 @@ if sample_bike_post.pictures.blank?
     sample_bike_post.pictures.create(image: bike_image_file)
     Rails.logger.info "Added image harley-davidson-street#{i}.jpg for \
     sample bike post"
+  end
+end
+
+Post.where(deactivated: nil).find_in_batches(batch_size: 10) do |group|
+  group.each do |post|
+    updated_post = post.update_attributes(deactivated: false)
+    Rails.logger.info "Updated post: #{post.attributes}" if updated_post
   end
 end

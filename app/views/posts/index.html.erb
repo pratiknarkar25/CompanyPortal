@@ -17,10 +17,10 @@
               <i class='glyphicon glyphicon-edit' data-toggle='tooltip' 
               data-placement='left' title="Edit"></i>
             <% end %>
-            <%= link_to category_post_path(post.category, post), method: :delete, 
-                data: { confirm: 'Are you sure?' } do %>
+            <%= link_to category_post_deactivate_path(post.category, post), 
+                data: { confirm: 'Are you sure you want to deactivate this post?' } do %>
               <i class='glyphicon glyphicon-remove'  data-toggle='tooltip' 
-              data-placement='left' title='Delete'></i>
+              data-placement='left' title='Deactivate'></i>
             <% end %>
           <% end %>
         </h3>

@@ -5,12 +5,12 @@
 class PostsController < ApplicationController
   before_action :require_authentication, except: %i[index show search]
   before_action :set_category, except: %i[my_posts search]
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[show edit update destroy deactivate]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = @category.posts.order(created_at: :desc)
+    @posts = @category.posts.active.order(created_at: :desc)
                       .page(params[:page]).per(Post::PER_PAGE)
   end
 
@@ -111,6 +111,27 @@ class PostsController < ApplicationController
     render :index
   end
 
+  def deactivate
+    authorize @post, :destroy?
+    @post.deactivated = true
+    @post.deactivation_date = Time.now
+    if @post.save
+      respond_to do |format|
+        format.html do
+          redirect_to category_posts_path(@category),
+                      notice: 'Post was successfully deactivated!!'
+        end
+        format.json { head :no_content }
+      end
+    else
+      format.html do
+        redirect_to category_posts_path(@category),
+                    notice: 'Unable to deactivate this post'
+      end
+      format.json { render json: @post.errors, status: :unprocessable_entity }
+    end
+  end
+
   private
 
   def add_images
@@ -126,7 +147,7 @@ class PostsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.active.find(params[:id])
     authorize @post
   end
 
@@ -138,7 +159,7 @@ class PostsController < ApplicationController
   # only allow the white list through.
   def post_params
     params.require(:post).permit(:title, :description, :address, :price,
-                                 :price, :contact_number, :published,
-                                 :published_date)
+                                 :price, :contact_number, :deactivated,
+                                 :deactivation_date)
   end
 end

@@ -17,4 +17,5 @@ class Post < ApplicationRecord
   has_many :pictures, dependent: :destroy
 
   PER_PAGE = 30
+  scope :active, -> { where('deactivated = ? or deactivated = ?', false, nil) }
 end

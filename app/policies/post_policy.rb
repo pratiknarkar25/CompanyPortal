@@ -10,7 +10,8 @@ class PostPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user&.id == @post.user_id || @user&.role == 'admin'
+    !@post.deactivated && (@user&.id == @post.user_id ||
+                           @user&.role == 'admin')
   end
 
   def update?
@@ -30,6 +31,10 @@ class PostPolicy < ApplicationPolicy
   end
 
   def delete_photo?
+    edit?
+  end
+
+  def deactivate?
     edit?
   end
 end
